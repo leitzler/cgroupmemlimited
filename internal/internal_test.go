@@ -13,12 +13,12 @@ func TestSetLimit(t *testing.T) {
 		root     fs.FS
 		expected int64
 	}{
-		{"1k_v1", fakeFS{cgroupV1File: []byte("1000")}, 900},
-		{"1k_v2", fakeFS{cgroupV2File: []byte("1000")}, 900},
+		{"1k_v1", fakeFS{cgroupV1File: []byte("1000\n")}, 900},
+		{"1k_v2", fakeFS{cgroupV2File: []byte("1000\n")}, 900},
 		{"no_cgroup", fakeFS{}, -1},
-		{"no_limit_v1", fakeFS{cgroupV1File: []byte("max")}, -1},
-		{"no_limit_v2", fakeFS{cgroupV2File: []byte("max")}, -1},
-		{"1k_v1_2k_v2", fakeFS{cgroupV1File: []byte("1000"), cgroupV2File: []byte("2000")}, 1800},
+		{"no_limit_v1", fakeFS{cgroupV1File: []byte("max\n")}, -1},
+		{"no_limit_v2", fakeFS{cgroupV2File: []byte("max\n")}, -1},
+		{"1k_v1_2k_v2", fakeFS{cgroupV1File: []byte("1000\n"), cgroupV2File: []byte("2000\n")}, 1800},
 	}
 
 	for _, tc := range tt {
@@ -40,12 +40,12 @@ func TestWithEnv(t *testing.T) {
 		root     fs.FS
 		expected int64
 	}{
-		{"1k_v1", fakeFS{cgroupV1File: []byte("1000")}, -1},
-		{"1k_v2", fakeFS{cgroupV2File: []byte("1000")}, -1},
+		{"1k_v1", fakeFS{cgroupV1File: []byte("1000\n")}, -1},
+		{"1k_v2", fakeFS{cgroupV2File: []byte("1000\n")}, -1},
 		{"no_cgroup", fakeFS{}, -1},
-		{"no_limit_v1", fakeFS{cgroupV1File: []byte("max")}, -1},
-		{"no_limit_v2", fakeFS{cgroupV2File: []byte("max")}, -1},
-		{"1k_v1_2k_v2", fakeFS{cgroupV1File: []byte("1000"), cgroupV2File: []byte("2000")}, -1},
+		{"no_limit_v1", fakeFS{cgroupV1File: []byte("max\n")}, -1},
+		{"no_limit_v2", fakeFS{cgroupV2File: []byte("max\n")}, -1},
+		{"1k_v1_2k_v2", fakeFS{cgroupV1File: []byte("1000\n"), cgroupV2File: []byte("2000\n")}, -1},
 	}
 
 	for _, tc := range tt {

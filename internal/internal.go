@@ -8,6 +8,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -43,13 +44,14 @@ func Limit(root fs.FS) int64 {
 	if err != nil {
 		panic(fmt.Sprintf("failed to read cgroup memory file: %v", err))
 	}
+	cgl := strings.TrimSpace(string(v))
 
 	// No cgroup limit set.
-	if string(v) == "max" {
+	if cgl == "max" {
 		return -1
 	}
 
-	limit, err := strconv.ParseInt(string(v), 10, 64)
+	limit, err := strconv.ParseInt(cgl, 10, 64)
 	if err != nil {
 		panic(fmt.Sprintf("failed to parse cgroup memory limit as uint: %v", err))
 	}
